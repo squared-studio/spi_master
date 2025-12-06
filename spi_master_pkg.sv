@@ -7,6 +7,10 @@
 
 package spi_master_pkg;
 
+  localparam int ADDR_WIDTH = 32;
+  localparam int DATA_WIDTH = 32;
+  localparam int NUM_WIRES = 4;
+
   // SPI Mode Definitions
   typedef enum logic [1:0] {
     SPI_MODE_0 = 2'b00,  // CPOL = 0, CPHA = 0
