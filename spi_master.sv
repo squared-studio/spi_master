@@ -16,77 +16,97 @@ module spi_master
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     input logic arst_ni,
-    input logic system_clk_i,
+    input logic clk_i,
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // AXI4-Lite Slave Interface
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    input  logic [ADDR_WIDTH-1:0] awaddr_i,
-    input  logic [           2:0] awprot_i,
-    input  logic                  awvalid_i,
-    output logic                  awready_o,
+    input  addr_t awaddr_i,
+    input  prot_t awprot_i,
+    input  logic  awvalid_i,
+    output logic  awready_o,
 
-    input  logic [    DATA_WIDTH-1:0] wdata_i,
-    input  logic [(DATA_WIDTH/8)-1:0] wstrb_i,
-    input  logic                      wvalid_i,
-    output logic                      wready_o,
+    input  data_t wdata_i,
+    input  strb_t wstrb_i,
+    input  logic  wvalid_i,
+    output logic  wready_o,
 
-    output logic [1:0] bresp_o,
-    output logic       bvalid_o,
-    input  logic       bready_i,
+    output resp_t bresp_o,
+    output logic  bvalid_o,
+    input  logic  bready_i,
 
-    input  logic [ADDR_WIDTH-1:0] araddr_i,
-    input  logic [           2:0] arprot_i,
-    input  logic                  arvalid_i,
-    output logic                  arready_o,
+    input  addr_t araddr_i,
+    input  prot_t arprot_i,
+    input  logic  arvalid_i,
+    output logic  arready_o,
 
-    output logic [DATA_WIDTH-1:0] rdata_o,
-    output logic [           1:0] rresp_o,
-    output logic                  rvalid_o,
-    input  logic                  rready_i,
+    output data_t rdata_o,
+    output resp_t rresp_o,
+    output logic  rvalid_o,
+    input  logic  rready_i,
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // SPI Interface
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    inout wire                 cs_no,
-    inout wire                 sclk_o,
-    inout wire [NUM_WIRES-1:0] sd_io
+    inout wire           cs_no,
+    inout wire           sclk_o,
+    inout spi_bus_wire_t sd_io
 
 );
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // Imports
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-  // Type Definitions
-  //////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // Internal Signals
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  logic              [NUM_WIRES-1:0] spi_sdo;
-  logic              [NUM_WIRES-1:0] spi_sdo_en;
-  logic              [NUM_WIRES-1:0] spi_sdi;
+  spi_bus_logic_t    spi_sdo;
+  spi_bus_logic_t    spi_sdi;
+  spi_mode_t         spi_mode;
+  spi_master_drive_t drive_mode;
 
-  spi_mode_t                         spi_mode;
-  spi_master_drive_e                 drive_mode;
+  clk_div_t          spi_clk_div;
+  logic              divided_clk;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
-  // Combinational Logic
+  // Sub Modules
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  spi_master_phy#(
-      .NUM_WIRES(NUM_WIRES)
-  ) (
+  spi_master_regif u_regif (
+      .arst_ni(arst_ni),
+      .clk_i(clk_i),
+      .awaddr_i(awaddr_i),
+      .awprot_i(awprot_i),
+      .awvalid_i(awvalid_i),
+      .awready_o(awready_o),
+      .wdata_i(wdata_i),
+      .wstrb_i(wstrb_i),
+      .wvalid_i(wvalid_i),
+      .wready_o(wready_o),
+      .bresp_o(bresp_o),
+      .bvalid_o(bvalid_o),
+      .bready_i(bready_i),
+      .araddr_i(araddr_i),
+      .arprot_i(arprot_i),
+      .arvalid_i(arvalid_i),
+      .arready_o(arready_o),
+      .rdata_o(rdata_o),
+      .rresp_o(rresp_o),
+      .rvalid_o(rvalid_o),
+      .rready_i(rready_i),
+      .spi_mode_o(spi_mode)
+  );
+
+  spi_master_clk_div u_spi_clk_divider (
+      .arst_ni(arst_ni),
+      .clk_i  (clk_i),
+      .div_i  (spi_clk_div),
+      .clk_o  (divided_clk)
+  );
+
+  spi_master_phy u_phy (
+      .clk_i(divided_clk),
       .spi_sdo(spi_sdo),
-      .spi_sdo_en(spi_sdo_en),
       .spi_sdi(spi_sdi),
       .spi_mode_i(spi_mode),
       .drive_mode_i(drive_mode),
