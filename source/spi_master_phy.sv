@@ -16,10 +16,10 @@ module spi_master_phy
     input logic clk_i,
 
     // SPI bus data vectors (types defined in `spi_master_pkg`):
-    // - `spi_sdo`: data driven by PHY to pads (MOSI/outputs)
-    // - `spi_sdi`: data sampled from pads (MISO/inputs)
-    input  spi_bus_t spi_sdo,
-    output spi_bus_t spi_sdi,
+    // - `spi_sdo_i`: data driven by PHY to pads (MOSI/outputs)
+    // - `spi_sdi_o`: data sampled from pads (MISO/inputs)
+    input  spi_bus_t spi_sdo_i,
+    output spi_bus_t spi_sdi_o,
 
     // SPI mode bits (e.g. CPOL/CPHA equivalent) used to configure clock
     // polarity and pad pull states.
@@ -96,14 +96,14 @@ module spi_master_phy
 
   // Instantiate a pad for each SDIO wire. Each pad is configured with the
   // corresponding data bit, enable and pull direction; sampled data is placed
-  // on `spi_sdi` back into the PHY.
+  // on `spi_sdi_o` back into the PHY.
   for (genvar i = 0; i < NUM_WIRES; i++) begin : g_sdio_pads
     spi_master_pad pad_sdio (
-        .write_data_i(spi_sdo[i]),
+        .write_data_i(spi_sdo_i[i]),
         .write_enable_i(spi_sdo_en[i]),
         .pull_up_i(spi_mode_i[1]),
         .pull_down_i(~spi_mode_i[1]),
-        .read_data_o(spi_sdi[i]),
+        .read_data_o(spi_sdi_o[i]),
         .pad_io(sd_io[i])
     );
   end

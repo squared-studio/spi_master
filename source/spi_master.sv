@@ -109,8 +109,8 @@ module spi_master
 
   spi_master_phy u_phy (
       .clk_i(divided_clk),
-      .spi_sdo(spi_sdo),
-      .spi_sdi(spi_sdi),
+      .spi_sdo_i(spi_sdo),
+      .spi_sdi_o(spi_sdi),
       .spi_mode_i(spi_mode),
       .drive_mode_i(drive_mode),
       .cs_no(cs_no),
