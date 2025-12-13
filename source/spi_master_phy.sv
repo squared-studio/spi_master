@@ -64,7 +64,7 @@ module spi_master_phy
   end
 
   // Adjust clock polarity based on mode bit0 (CPOL/CPHA handling).
-  always_comb clk = (spi_mode_i[0]) ? ~clk_i : clk_i;
+  always_comb clk = (^spi_mode_i) ? clk_i : ~clk_i;
 
   // Chip-select pad: drive active-low CS when PHY is active. Pad primitive
   // handles the physical pull-up/pull-down and tri-state behavior.

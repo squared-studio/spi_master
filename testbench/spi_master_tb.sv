@@ -92,8 +92,34 @@ module spi_master_tb;
   initial begin
     $dumpfile("spi_master_tb.vcd");
     $dumpvars(0, spi_master_tb);
+
     apply_reset();
     toggle_clock();
+
+    @(posedge clk_i);
+
+    force u_dut.drive_mode = 0;
+    force u_dut.spi_clk_div = 2;
+    force u_dut.spi_sdo = 0;
+    force u_dut.spi_mode = 0;
+
+    fork
+      forever begin
+        @ (posedge u_dut.u_phy.clk_i);
+        force u_dut.u_phy.spi_sdo_i = $random;
+      end
+    join_none
+
+    repeat (8) begin
+      repeat (16) begin
+        repeat (16) @(posedge clk_i);
+        force u_dut.drive_mode = u_dut.drive_mode + 1;
+      end
+      force u_dut.spi_mode = u_dut.spi_mode + 1;
+    end
+
+    repeat (32) @(posedge clk_i);
+    $finish;
   end
 
 

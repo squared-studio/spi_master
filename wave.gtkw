@@ -1,0 +1,55 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Sat Dec 13 16:40:15 2025
+[*]
+[dumpfile] "D:\Users\Foez\spi_master\build\spi_master_tb.vcd"
+[dumpfile_mtime] "Sat Dec 13 16:40:07 2025"
+[dumpfile_size] 45628
+[savefile] "D:\Users\Foez\spi_master\wave.gtkw"
+[timestart] 0
+[size] 958 1000
+[pos] -1 -1
+*-20.424189 3820000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] spi_master_tb.
+[treeopen] spi_master_tb.u_dut.
+[sst_width] 197
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 294
+@28
+spi_master_tb.arst_ni
+spi_master_tb.clk_i
+@200
+-
+-phy
+@28
+spi_master_tb.u_dut.u_phy.clk_i
+@22
+spi_master_tb.u_dut.u_phy.spi_sdo_i[3:0]
+spi_master_tb.u_dut.u_phy.spi_sdi_o[3:0]
+@28
+spi_master_tb.u_dut.u_phy.spi_mode_i[1:0]
+spi_master_tb.u_dut.u_phy.drive_mode_i[2:0]
+spi_master_tb.u_dut.u_phy.cs_no
+spi_master_tb.u_dut.u_phy.sclk_o
+@800022
+spi_master_tb.u_dut.u_phy.sd_io[3:0]
+@28
+(0)spi_master_tb.u_dut.u_phy.sd_io[3:0]
+(1)spi_master_tb.u_dut.u_phy.sd_io[3:0]
+(2)spi_master_tb.u_dut.u_phy.sd_io[3:0]
+(3)spi_master_tb.u_dut.u_phy.sd_io[3:0]
+@1001200
+-group_end
+@200
+-
+@28
+spi_master_tb.u_dut.u_phy.clk
+@29
+spi_master_tb.u_dut.u_phy.clk_en
+@28
+spi_master_tb.u_dut.u_phy.is_active
+@22
+spi_master_tb.u_dut.u_phy.spi_sdo_en[3:0]
+[pattern_trace] 1
+[pattern_trace] 0
