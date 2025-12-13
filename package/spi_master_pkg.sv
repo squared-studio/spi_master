@@ -24,12 +24,14 @@ package spi_master_pkg;
   // Register offset
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
+  // verilog_format: off
   parameter addr_t REG_OFF_SPI_CSR_BASE = 32'h0000_0000;
   parameter addr_t REG_OFF_SPI_CSR_HIGH = 32'h0000_0004;
   parameter addr_t REG_OFF_SPI_MEM_BASE = 32'h0000_0008;
   parameter addr_t REG_OFF_SPI_MEM_HIGH = 32'h0000_000C;
-  parameter addr_t REG_OFF_SPI_CLK_DIV = 32'h0000_0010;
-  parameter addr_t REG_OFF_SPI_MODE = 32'h0000_0014;
+  parameter addr_t REG_OFF_SPI_CLK_DIV  = 32'h0000_0010;
+  parameter addr_t REG_OFF_SPI_MODE     = 32'h0000_0014;
+  // verilog_format: on
 
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // Type definition for clock divisor
