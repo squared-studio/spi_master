@@ -2,7 +2,9 @@
 // This module divides the input clock by a programmable divisor to generate the SPI clock output.
 // The divisor is specified by the div_i input, and the width of the divisor is parameterized by DIV_WIDTH.
 
-module spi_master_clk_div (
+module spi_master_clk_div
+import spi_master_pkg::*;
+(
     input logic     arst_ni,  // Asynchronous reset, active low
     input logic     clk_i,    // Input clock
     input clk_div_t div_i,    // Clock divisor value

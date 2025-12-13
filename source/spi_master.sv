@@ -7,6 +7,8 @@
 // Copyright (c) 2025 Squared Studio
 // Author: Foez Ahmed (foez.official@gmail.com)
 
+`include "common_defines.svh"
+
 module spi_master
   import spi_master_pkg::*;
 (
@@ -50,9 +52,9 @@ module spi_master
     // SPI Interface
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    inout wire           cs_no,
-    inout wire           sclk_o,
-    inout spi_bus_wire_t sd_io
+    inout wire            cs_no,
+    inout wire            sclk_o,
+    inout `SPI_BUS_WIRE_T sd_io
 
 );
 
@@ -60,8 +62,8 @@ module spi_master
   // Internal Signals
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  spi_bus_logic_t    spi_sdo;
-  spi_bus_logic_t    spi_sdi;
+  spi_bus_t          spi_sdo;
+  spi_bus_t          spi_sdi;
   spi_mode_t         spi_mode;
   spi_master_drive_t drive_mode;
 
@@ -94,6 +96,7 @@ module spi_master
       .rresp_o(rresp_o),
       .rvalid_o(rvalid_o),
       .rready_i(rready_i),
+      .spi_clk_div_o(spi_clk_div),
       .spi_mode_o(spi_mode)
   );
 

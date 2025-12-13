@@ -6,6 +6,8 @@
 // Copyright (c) 2025 Squared Studio
 // Author: Foez Ahmed (foez.official@gmail.com)
 
+`include "common_defines.svh"
+
 module spi_master_phy
   import spi_master_pkg::*;
 (
@@ -16,8 +18,8 @@ module spi_master_phy
     // SPI bus data vectors (types defined in `spi_master_pkg`):
     // - `spi_sdo`: data driven by PHY to pads (MOSI/outputs)
     // - `spi_sdi`: data sampled from pads (MISO/inputs)
-    input  spi_bus_logic_t spi_sdo,
-    output spi_bus_logic_t spi_sdi,
+    input  spi_bus_t spi_sdo,
+    output spi_bus_t spi_sdi,
 
     // SPI mode bits (e.g. CPOL/CPHA equivalent) used to configure clock
     // polarity and pad pull states.
@@ -27,16 +29,16 @@ module spi_master_phy
 
     // Physical pad connections. These are inout because pad primitives handle
     // tri-state and weak pull behaviour.
-    inout wire           cs_no,
-    inout wire           sclk_o,
-    inout spi_bus_wire_t sd_io
+    inout wire            cs_no,
+    inout wire            sclk_o,
+    inout `SPI_BUS_WIRE_T sd_io
 );
 
   // High when PHY should actively drive the pads (not IDLE)
   logic is_active;
 
   // Per-wire drive enable (1 => drive that SDIO line). Width equals `NUM_WIRES`.
-  spi_bus_logic_t spi_sdo_en;
+  spi_bus_t spi_sdo_en;
 
   // Internal clock value to drive SCLK pad (may be inverted based on mode).
   logic clk;
