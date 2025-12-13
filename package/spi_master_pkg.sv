@@ -47,6 +47,13 @@ package spi_master_pkg;
   parameter int NUM_WIRES = 4;
   typedef logic [NUM_WIRES-1:0] spi_bus_t;
 
+  // verilog_format: off
+  parameter spi_bus_t NO_DRIVE     = 'b0000;  // No drive on any wire (high impedance)
+  parameter spi_bus_t SINGLE_DRIVE = 'b0001;  // Single wire drive (1 wire output)
+  parameter spi_bus_t DUAL_DRIVE   = 'b0011;  // Dual wire drive (2 wire output)
+  parameter spi_bus_t QUAD_DRIVE   = 'b1111;  // Quad wire drive (4 wire output)
+  // verilog_format: on
+
   //////////////////////////////////////////////////////////////////////////////////////////////////
   // Type definitions for SPI modes
   //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,18 +69,16 @@ package spi_master_pkg;
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
   typedef logic [2:0] spi_master_drive_t;
-  parameter spi_master_drive_t IDLE = 3'd0;  // SPI Idle State. All wires are high impedance
-  parameter spi_master_drive_t DUMMY = 3'd1;  // Dummy Cycle State. All wires are high impedance
-  parameter spi_master_drive_t STD_OUT = 3'd2;  // Standard Output Mode (1 wire output)
-  parameter spi_master_drive_t STD_IN = 3'd3;  // Standard Input Mode (1 wire input)
-  parameter spi_master_drive_t DUAL_OUT = 3'd4;  // Dual Output Mode (2 wire output)
-  parameter spi_master_drive_t DUAL_IN = 3'd5;  // Dual Input Mode (2 wire input)
-  parameter spi_master_drive_t QUAD_OUT = 3'd6;  // Quad Output Mode (4 wire output)
-  parameter spi_master_drive_t QUAD_IN = 3'd7;  // Quad Input Mode (4 wire input)
 
-  parameter spi_bus_t NO_DRIVE = 'b0000;  // No drive on any wire (high impedance)
-  parameter spi_bus_t SINGLE_DRIVE = 'b0001;  // No drive on any wire (high impedance)
-  parameter spi_bus_t DUAL_DRIVE = 'b0011;  // No drive on any wire (high impedance)
-  parameter spi_bus_t QUAD_DRIVE = 'b1111;  // No drive on any wire (high impedance)
+  // verilog_format: off
+  parameter spi_master_drive_t IDLE     = 3'd0;  // SPI Idle State. All wires are high impedance
+  parameter spi_master_drive_t DUMMY    = 3'd1;  // Dummy Cycle State. All wires are high impedance
+  parameter spi_master_drive_t STD_OUT  = 3'd2;  // Standard Output Mode (1 wire output)
+  parameter spi_master_drive_t STD_IN   = 3'd3;  // Standard Input Mode (1 wire input)
+  parameter spi_master_drive_t DUAL_OUT = 3'd4;  // Dual Output Mode (2 wire output)
+  parameter spi_master_drive_t DUAL_IN  = 3'd5;  // Dual Input Mode (2 wire input)
+  parameter spi_master_drive_t QUAD_OUT = 3'd6;  // Quad Output Mode (4 wire output)
+  parameter spi_master_drive_t QUAD_IN  = 3'd7;  // Quad Input Mode (4 wire input)
+  // verilog_format: on
 
 endpackage
